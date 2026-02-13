@@ -118,15 +118,9 @@ void salvarDados(Reserva *lista, int qtd) {
         return;
     }
     for (int i = 0; i < qtd; i++) {
-
         fprintf(arquivo, "%d;%s;%s;%s;%s;%s\n", 
             lista[i].id, lista[i].laboratorio, lista[i].solicitante, 
             lista[i].data, lista[i].horario, lista[i].horario_fim);
-
-        fprintf(arquivo, "%d;%s;%s;%s;%s\n", 
-            lista[i].id, lista[i].laboratorio, lista[i].solicitante, 
-            lista[i].data, lista[i].horario);
-
     }
     fclose(arquivo);
     printf("Dados salvos com sucesso!\n");
@@ -143,15 +137,8 @@ void carregarDados(Reserva **lista, int *capacidade, int *qtd) {
         }
         
         Reserva *r = &(*lista)[*qtd];
-        
-        // Adicionado um %[^;]; para o horário inicial, e o [^\n] fica para o horário final
         sscanf(linha, "%d;%[^;];%[^;];%[^;];%[^;];%[^\n]", 
-            &r->id, 
-            r->laboratorio, 
-            r->solicitante, 
-            r->data, 
-            r->horario, 
-            r->horario_fim); // <-- Agora ele lê o horário final!
+            &r->id, r->laboratorio, r->solicitante, r->data, r->horario, r->horario_fim);
         
         (*qtd)++;
     }
@@ -161,10 +148,7 @@ void carregarDados(Reserva **lista, int *capacidade, int *qtd) {
 void liberarMemoria(Reserva *lista) {
     if (lista != NULL) free(lista);
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> b64e4e8d9a2b6e9483a9f89a2d77bf17fca9d21f
 void inserirReserva(Reserva **lista, int *capacidade, int *qtd) {
     if (*qtd >= *capacidade) {
         *lista = expandirCapacidade(*lista, capacidade);
